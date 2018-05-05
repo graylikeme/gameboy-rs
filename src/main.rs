@@ -2,12 +2,18 @@ extern crate num_traits;
 mod bitwise;
 
 pub struct LR35902 {
+    // General purpose registers
     af: u16,
     bc: u16,
     de: u16,
     hl: u16,
     sp: u16,
-    pc: u16
+    pc: u16,
+
+    // Interrupt registers
+    if_reg: u8,
+    ie_reg: u8,
+    ime_reg: u8,
 }
 
 impl LR35902 {
