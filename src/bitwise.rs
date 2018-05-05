@@ -33,11 +33,7 @@ pub fn flip_bit<T>(at: usize, of: T) -> Option<T>
     }
 
     let num: Option<T> = NumCast::from(0x01);
-    if  let Some(n) = num {
-        return Some((n << at) ^ of);
-    }
-
-    None
+    num.map(|n| (n << at) ^ of)
 }
 
 pub fn get_bit<T>(at: usize, of: T) -> Option<Bit>
@@ -47,15 +43,9 @@ pub fn get_bit<T>(at: usize, of: T) -> Option<Bit>
     }
 
     let num: Option<T> = NumCast::from(0x01);
-    if let Some(n) = num {
-        if  ((n << at) & of).is_zero() {
-            return Some(Bit::Zero);
-        }
-
-        return Some(Bit::One);
-    }
-
-    None
+    num.map(|n| {
+        if ((n << at) & of).is_zero() { Bit::Zero } else { Bit::One }
+    })
 }
 
 pub fn set_bit_one<T>(at: usize, of: T) -> Option<T>
@@ -65,11 +55,7 @@ pub fn set_bit_one<T>(at: usize, of: T) -> Option<T>
     }
 
     let num: Option<T> = NumCast::from(0x01);
-    if let Some(n) = num {
-        return Some((n << at) | of);
-    }
-
-    None
+    num.map(|n| (n << at) | of)
 }
 
 pub fn set_bit_zero<T>(at: usize, of: T) -> Option<T>
@@ -78,10 +64,6 @@ pub fn set_bit_zero<T>(at: usize, of: T) -> Option<T>
         return None
     }
 
-    let num: Option<T> = NumCast::from(0x1);
-    if let Some(n) = num {
-        return Some(!(n << at) & of);
-    }
-
-    None
+    let num: Option<T> = NumCast::from(0x01);
+    num.map(|n| !(n << at) & of)
 }
