@@ -28,7 +28,7 @@ pub fn get_most(of: u16) -> u8 {
 
 pub fn flip_bit<T>(at: usize, of: T) -> Option<T>
     where T: Unsigned + PrimInt + NumCast {
-    if size_of::<T>()*8 <= at {
+    if size_of::<T>() * 8 <= at {
         return None
     }
 
@@ -42,7 +42,7 @@ pub fn flip_bit<T>(at: usize, of: T) -> Option<T>
 
 pub fn get_bit<T>(at: usize, of: T) -> Option<Bit>
     where T: Unsigned + PrimInt + NumCast {
-    if size_of::<T>()*8 <= at {
+    if size_of::<T>() * 8 <= at {
         return None
     }
 
@@ -53,6 +53,34 @@ pub fn get_bit<T>(at: usize, of: T) -> Option<Bit>
         }
 
         return Some(Bit::One);
+    }
+
+    None
+}
+
+pub fn set_bit_one<T>(at: usize, of: T) -> Option<T>
+    where T: Unsigned + PrimInt + NumCast {
+    if size_of::<T>() * 8 <= at {
+        return None
+    }
+
+    let num: Option<T> = NumCast::from(0x01);
+    if let Some(n) = num {
+        return Some((n << at) | of);
+    }
+
+    None
+}
+
+pub fn set_bit_zero<T>(at: usize, of: T) -> Option<T>
+    where T: Unsigned + PrimInt + NumCast {
+    if size_of::<T>() * 8 <= at {
+        return None
+    }
+
+    let num: Option<T> = NumCast::from(0x1);
+    if let Some(n) = num {
+        return Some(!(n << at) & of);
     }
 
     None
