@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["Stanislav Ageev <stanislav@roomd.net>"]
 
 [dependencies]
+num-traits = "0.2"

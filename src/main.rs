@@ -1,3 +1,4 @@
+extern crate num_traits;
 mod bitwise;
 
 pub struct LR35902 {
