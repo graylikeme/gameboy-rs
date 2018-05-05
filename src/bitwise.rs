@@ -74,3 +74,14 @@ pub fn unset_bit<T>(at: usize, of: T) -> Option<T>
     let num: Option<T> = NumCast::from(0x01);
     num.map(|n| !(n << at) & of)
 }
+
+#[allow(dead_code)]
+pub fn isset_bit<T>(at: usize, of: T) -> Option<bool>
+    where T: Unsigned + PrimInt + NumCast {
+    if size_of::<T>() * 8 <= at {
+        return None
+    }
+
+    let num: Option<T> = NumCast::from(0x01);
+    num.map(|n| ((of >> at) & n).is_one())
+}
