@@ -3,12 +3,6 @@ use num_traits::Unsigned;
 use num_traits::int::PrimInt;
 use num_traits::cast::NumCast;
 
-#[derive(Debug)]
-pub enum Bit {
-    Zero,
-    One
-}
-
 #[allow(dead_code)]
 pub fn set_least(of: u16, to: u8) -> u16 {
     (of & 0xFF00) | to as u16
@@ -38,19 +32,6 @@ pub fn flip_bit<T>(at: usize, of: T) -> Option<T>
 
     let num: Option<T> = NumCast::from(0x01);
     num.map(|n| (n << at) ^ of)
-}
-
-#[allow(dead_code)]
-pub fn get_bit<T>(at: usize, of: T) -> Option<Bit>
-    where T: Unsigned + PrimInt + NumCast {
-    if size_of::<T>() * 8 <= at {
-        return None
-    }
-
-    let num: Option<T> = NumCast::from(0x01);
-    num.map(|n| {
-        if ((n << at) & of).is_zero() { Bit::Zero } else { Bit::One }
-    })
 }
 
 #[allow(dead_code)]
