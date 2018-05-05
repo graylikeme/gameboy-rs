@@ -1,7 +1,5 @@
 use std::mem::size_of;
-use num_traits::Unsigned;
-use num_traits::int::PrimInt;
-use num_traits::cast::NumCast;
+use num_traits::{ Unsigned, PrimInt, NumCast };
 
 #[allow(dead_code)]
 pub fn set_least(of: u16, to: u8) -> u16 {
