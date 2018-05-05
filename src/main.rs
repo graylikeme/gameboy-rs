@@ -1,8 +1,7 @@
 mod bitwise;
 
 pub struct LR35902 {
-    a: u8,
-    f: u8,
+    af: u16,
     bc: u16,
     de: u16,
     hl: u16,
@@ -11,6 +10,22 @@ pub struct LR35902 {
 }
 
 impl LR35902 {
+    pub fn get_a(&self) -> u8 {
+        bitwise::get_most(self.af)
+    }
+
+    pub fn set_a(&self, to: u8) {
+        bitwise::set_most(self.af, to);
+    }
+
+    pub fn get_f(&self) -> u8 {
+        bitwise::get_least(self.af)
+    }
+
+    pub fn set_f(&self, to: u8) {
+        bitwise::set_least(self.af, to);
+    }
+
     pub fn get_b(&self) -> u8 {
         bitwise::get_most(self.bc)
     }
@@ -44,19 +59,19 @@ impl LR35902 {
     }
 
     pub fn get_h(&self) -> u8 {
-        bitwise::get_most(self.de)
+        bitwise::get_most(self.hl)
     }
 
     pub fn set_h(&self, to: u8) {
-        bitwise::set_most(self.de, to);
+        bitwise::set_most(self.hl, to);
     }
 
     pub fn get_l(&self) -> u8 {
-        bitwise::get_least(self.de)
+        bitwise::get_least(self.hl)
     }
 
     pub fn set_l(&self, to: u8) {
-        bitwise::set_least(self.de, to);
+        bitwise::set_least(self.hl, to);
     }
 }
 
