@@ -48,7 +48,7 @@ pub fn get_bit<T>(at: usize, of: T) -> Option<Bit>
     })
 }
 
-pub fn set_bit_one<T>(at: usize, of: T) -> Option<T>
+pub fn set_bit<T>(at: usize, of: T) -> Option<T>
     where T: Unsigned + PrimInt + NumCast {
     if size_of::<T>() * 8 <= at {
         return None
@@ -58,7 +58,7 @@ pub fn set_bit_one<T>(at: usize, of: T) -> Option<T>
     num.map(|n| (n << at) | of)
 }
 
-pub fn set_bit_zero<T>(at: usize, of: T) -> Option<T>
+pub fn unset_bit<T>(at: usize, of: T) -> Option<T>
     where T: Unsigned + PrimInt + NumCast {
     if size_of::<T>() * 8 <= at {
         return None
