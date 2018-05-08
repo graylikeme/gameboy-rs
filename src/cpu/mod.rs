@@ -105,4 +105,12 @@ impl LR35902 {
     pub fn set_l(&self, to: u8) {
         bitwise::set_least(self.hl, to);
     }
+
+    pub fn get_pc(&self) -> u16 {
+        self.pc
+    }
+
+    pub fn set_pc(&mut self, to: u16) {
+        self.pc = to;
+    }
 }
