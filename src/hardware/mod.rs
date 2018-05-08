@@ -8,7 +8,7 @@ pub struct Bus {
 
 impl Bus {
     pub fn new(mmu: Box<GameboyMemory>) -> Bus {
-        return Bus { mmu }
+        Bus { mmu }
     }
 
     pub fn read_mem(&self, addr: u16) -> u8 {

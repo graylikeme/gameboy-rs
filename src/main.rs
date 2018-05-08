@@ -18,7 +18,7 @@ pub struct Gameboy {
 impl Gameboy {
     pub fn start(&mut self) {
         loop {
-            self.cpu.step(&mut (*self.bus));
+            self.cpu.step(&mut *self.bus);
         }
     }
 }

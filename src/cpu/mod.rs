@@ -1,4 +1,7 @@
-use super::bitwise;
+mod instructions;
+
+use bitwise;
+use self::instructions::Instruction;
 use hardware::Bus;
 
 pub trait GameboyCPU {
@@ -22,8 +25,9 @@ pub struct LR35902 {
 
 impl GameboyCPU for LR35902 {
     fn step(&mut self, bus: &mut Bus) {
-        self.af = 1;
-        bus.read_mem(1);
+        let opcode = bus.read_mem(self.pc);
+        let instruction = Instruction::get(opcode);
+        instruction.execute(self, bus);
     }
 }
 
