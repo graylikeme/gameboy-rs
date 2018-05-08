@@ -1,7 +1,8 @@
 use super::bitwise;
+use hardware::Bus;
 
 pub trait GameboyCPU {
-    fn step(&mut self);
+    fn step(&mut self, bus: &mut Bus);
 }
 
 pub struct LR35902 {
@@ -20,8 +21,9 @@ pub struct LR35902 {
 }
 
 impl GameboyCPU for LR35902 {
-    fn step(&mut self) {
+    fn step(&mut self, bus: &mut Bus) {
         self.af = 1;
+        bus.read_mem(1);
     }
 }
 
