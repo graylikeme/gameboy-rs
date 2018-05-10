@@ -110,11 +110,51 @@ impl LR35902 {
         bitwise::set_least(self.hl, to);
     }
 
+    pub fn get_sp(&self) -> u16 {
+        self.sp
+    }
+
+    pub fn set_sp(&mut self, to: u16) {
+        self.sp = to;
+    }
+
     pub fn get_pc(&self) -> u16 {
         self.pc
     }
 
     pub fn set_pc(&mut self, to: u16) {
         self.pc = to;
+    }
+
+    pub fn get_hl(&self) -> u16 {
+        self.hl
+    }
+
+    pub fn set_hl(&mut self, to: u16) {
+        self.hl = to;
+    }
+
+    pub fn get_de(&self) -> u16 {
+        self.de
+    }
+
+    pub fn set_de(&mut self, to: u16) {
+        self.de = to;
+    }
+
+    pub fn get_bc(&self) -> u16 {
+        self.bc
+    }
+
+    pub fn set_bc(&mut self, to: u16) {
+        self.bc = to;
+    }
+
+    pub fn get_af(&self) -> u16 {
+        self.af
+    }
+
+    pub fn set_af(&mut self, to: u16) {
+        self.af = to;
     }
 }
