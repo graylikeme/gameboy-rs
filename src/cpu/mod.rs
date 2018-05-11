@@ -124,6 +124,14 @@ impl LR35902 {
         self.pc = to;
     }
 
+    pub fn inc_pc(&mut self) {
+        self.pc += 1;
+    }
+
+    pub fn dec_pc(&mut self) {
+        self.pc -= 1;
+    }
+
     pub fn get_hl(&self) -> u16 {
         self.hl
     }

@@ -3,8 +3,7 @@ use hardware::Bus;
 
 pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
     let opcode = bus.read_mem(cpu.get_pc());
-    let new_pc = cpu.get_pc() + 1;
-    cpu.set_pc(new_pc);
+    cpu.inc_pc();
 
     match opcode {
         0xCB => { call_alt(cpu, bus) }
@@ -14,8 +13,7 @@ pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
 
 fn call_alt(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
     let opcode = bus.read_mem(cpu.get_pc());
-    let new_pc = cpu.get_pc() + 1;
-    cpu.set_pc(new_pc);
+    cpu.inc_pc();
 
     match opcode {
         unknown_op => panic!("Instruction unimplemented: {:2X}", unknown_op)
