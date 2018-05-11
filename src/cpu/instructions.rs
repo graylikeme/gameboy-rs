@@ -1,15 +1,23 @@
 use cpu::LR35902;
 use hardware::Bus;
 
-pub struct Instruction {}
+pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
+    let opcode = bus.read_mem(cpu.get_pc());
+    let new_pc = cpu.get_pc() + 1;
+    cpu.set_pc(new_pc);
 
-impl Instruction {
-    pub fn get(opcode: u8) -> Instruction {
-        unimplemented!()
+    match opcode {
+        0xCB => { call_alt(cpu, bus) }
+        unknown_op => panic!("Instruction unimplemented: {:2X}", unknown_op)
     }
+}
 
-    pub fn execute(&self, cpu: &mut LR35902, bus: &mut Bus) {
-        let pc = cpu.get_pc();
-        cpu.set_pc(pc + 1);
+fn call_alt(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
+    let opcode = bus.read_mem(cpu.get_pc());
+    let new_pc = cpu.get_pc() + 1;
+    cpu.set_pc(new_pc);
+
+    match opcode {
+        unknown_op => panic!("Instruction unimplemented: {:2X}", unknown_op)
     }
 }
