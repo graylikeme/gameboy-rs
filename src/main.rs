@@ -5,7 +5,7 @@ mod cpu;
 mod hardware;
 
 use cpu::{GameboyCPU, LR35902};
-use hardware::{Bus, mmu::Memory};
+use hardware::{mmu, Bus};
 
 pub struct Gameboy {
     cpu: Box<GameboyCPU>,
@@ -22,7 +22,7 @@ impl Gameboy {
 
 fn main() {
     let cpu = Box::new(LR35902::new());
-    let mmu = Box::new(Memory::new());
+    let mmu = mmu::get_mmu();
     let bus = Box::new(Bus::new(mmu));
 
     let mut gb = Gameboy { cpu, bus };

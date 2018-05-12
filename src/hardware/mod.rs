@@ -1,13 +1,13 @@
 pub mod mmu;
 
-use self::mmu::GameboyMemory;
+use self::mmu::MMU;
 
 pub struct Bus {
-    mmu: Box<GameboyMemory>,
+    mmu: Box<MMU>,
 }
 
 impl Bus {
-    pub fn new(mmu: Box<GameboyMemory>) -> Bus {
+    pub fn new(mmu: Box<MMU>) -> Bus {
         Bus { mmu }
     }
 

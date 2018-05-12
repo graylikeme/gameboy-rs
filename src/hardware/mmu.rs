@@ -1,19 +1,40 @@
-const ROM_SIZE: usize = 0x4000;
-const RAM_SIZE: usize = 0x2000;
-
-pub trait GameboyMemory {
+pub trait MMU {
     fn read(&self, addr: u16) -> u8;
     fn write(&mut self, addr: u16, value: u8);
 }
 
-pub struct Memory {
-    rom: [u8; ROM_SIZE],
-    ram: [u8; RAM_SIZE],
+pub struct MBC0 {}
+
+impl MMU for MBC0 {
+    fn read(&self, addr: u16) -> u8 {
+        unimplemented!()
+    }
+
+    fn write(&mut self, addr: u16, value: u8) {
+        unimplemented!()
+    }
+}
+
+pub struct MBC1 {}
+
+impl MMU for MBC1 {
+    fn read(&self, addr: u16) -> u8 {
+        unimplemented!()
+    }
+
+    fn write(&mut self, addr: u16, value: u8) {
+        unimplemented!()
+    }
+}
+
+pub struct MBC2 {
+    rom: Vec<u8>,
+    ram: Vec<u8>,
     rom_offset: usize,
     rom_size: usize,
 }
 
-impl GameboyMemory for Memory {
+impl MMU for MBC2 {
     fn read(&self, addr: u16) -> u8 {
         match addr {
             0x0000..=0x3FFF => self.rom[addr as usize],
@@ -40,13 +61,35 @@ impl GameboyMemory for Memory {
     }
 }
 
-impl Memory {
-    pub fn new() -> Memory {
-        Memory {
-            rom: [0; ROM_SIZE],
-            ram: [0; RAM_SIZE],
-            rom_offset: 0,
-            rom_size: 0,
-        }
+pub struct MBC3 {}
+
+impl MMU for MBC3 {
+    fn read(&self, addr: u16) -> u8 {
+        unimplemented!()
     }
+
+    fn write(&mut self, addr: u16, value: u8) {
+        unimplemented!()
+    }
+}
+
+pub struct MBC5 {}
+
+impl MMU for MBC5 {
+    fn read(&self, addr: u16) -> u8 {
+        unimplemented!()
+    }
+
+    fn write(&mut self, addr: u16, value: u8) {
+        unimplemented!()
+    }
+}
+
+pub fn get_mmu() -> Box<MMU> {
+    Box::new(MBC2 {
+        rom: vec![0; 0x4000],
+        ram: vec![0; 0x2000],
+        rom_offset: 0,
+        rom_size: 0,
+    })
 }
