@@ -1,14 +1,11 @@
 extern crate num_traits;
 
+mod bitwise;
 mod cpu;
 mod hardware;
-mod bitwise;
 
-use cpu::{ GameboyCPU, LR35902 };
-use hardware::{
-    Bus,
-    mmu::{ GameboyMemory, Memory }
-};
+use cpu::{GameboyCPU, LR35902};
+use hardware::{Bus, mmu::Memory};
 
 pub struct Gameboy {
     cpu: Box<GameboyCPU>,

@@ -1,5 +1,5 @@
+use num_traits::{NumCast, PrimInt, Unsigned};
 use std::mem::size_of;
-use num_traits::{ Unsigned, PrimInt, NumCast };
 
 #[allow(dead_code)]
 pub fn set_least(of: u16, to: u8) -> u16 {
@@ -23,9 +23,11 @@ pub fn get_most(of: u16) -> u8 {
 
 #[allow(dead_code)]
 pub fn flip_bit<T>(at: usize, of: T) -> Option<T>
-    where T: Unsigned + PrimInt + NumCast {
+where
+    T: Unsigned + PrimInt + NumCast,
+{
     if size_of::<T>() * 8 <= at {
-        return None
+        return None;
     }
 
     let num: Option<T> = NumCast::from(0x01);
@@ -34,9 +36,11 @@ pub fn flip_bit<T>(at: usize, of: T) -> Option<T>
 
 #[allow(dead_code)]
 pub fn set_bit<T>(at: usize, of: T) -> Option<T>
-    where T: Unsigned + PrimInt + NumCast {
+where
+    T: Unsigned + PrimInt + NumCast,
+{
     if size_of::<T>() * 8 <= at {
-        return None
+        return None;
     }
 
     let num: Option<T> = NumCast::from(0x01);
@@ -45,9 +49,11 @@ pub fn set_bit<T>(at: usize, of: T) -> Option<T>
 
 #[allow(dead_code)]
 pub fn unset_bit<T>(at: usize, of: T) -> Option<T>
-    where T: Unsigned + PrimInt + NumCast {
+where
+    T: Unsigned + PrimInt + NumCast,
+{
     if size_of::<T>() * 8 <= at {
-        return None
+        return None;
     }
 
     let num: Option<T> = NumCast::from(0x01);
@@ -56,9 +62,11 @@ pub fn unset_bit<T>(at: usize, of: T) -> Option<T>
 
 #[allow(dead_code)]
 pub fn isset_bit<T>(at: usize, of: T) -> Option<bool>
-    where T: Unsigned + PrimInt + NumCast {
+where
+    T: Unsigned + PrimInt + NumCast,
+{
     if size_of::<T>() * 8 <= at {
-        return None
+        return None;
     }
 
     let num: Option<T> = NumCast::from(0x01);
