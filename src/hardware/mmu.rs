@@ -3,15 +3,28 @@ pub trait MMU {
     fn write(&mut self, addr: u16, value: u8);
 }
 
-pub struct MBC0 {}
+pub struct MBCNone {
+    rom: Vec<u8>,
+    ram: Vec<u8>,
+}
 
-impl MMU for MBC0 {
+impl MMU for MBCNone {
     fn read(&self, addr: u16) -> u8 {
-        unimplemented!()
+        match addr {
+            0x0000..=0x7FFF => self.rom[addr as usize],
+            0xA000..=0xBFFF => self.ram[(addr - 0xA000) as usize],
+            _ => 0xFF
+        }
     }
 
     fn write(&mut self, addr: u16, value: u8) {
-        unimplemented!()
+        match addr {
+            0xA000..=0xBFFF => self.ram[(addr - 0xA000) as usize] = value,
+            unknown_addr => println!(
+                "Attempted to write to unreachable address: {:2X}",
+                unknown_addr
+            ),
+        }
     }
 }
 
@@ -39,7 +52,7 @@ impl MMU for MBC2 {
         match addr {
             0x0000..=0x3FFF => self.rom[addr as usize],
             0x4000..=0x7FFF => self.rom[self.rom_offset + (addr as usize - 0x4000)],
-            0xA000..=0xBFFF => self.ram[addr as usize - 0xA000] & 0x0F,
+            0xA000..=0xBFFF => self.ram[(addr - 0xA000) as usize] & 0x0F,
             _ => 0xFF,
         }
     }
@@ -86,10 +99,8 @@ impl MMU for MBC5 {
 }
 
 pub fn get_mmu() -> Box<MMU> {
-    Box::new(MBC2 {
+    Box::new(MBCNone {
         rom: vec![0; 0x4000],
         ram: vec![0; 0x2000],
-        rom_offset: 0,
-        rom_size: 0,
     })
 }
