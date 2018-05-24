@@ -9,7 +9,7 @@ pub trait GameboyCPU {
 
 pub struct LR35902 {
     // General purpose registers
-    af: u16,
+    a: u8,
     bc: u16,
     de: u16,
     hl: u16,
@@ -20,6 +20,31 @@ pub struct LR35902 {
     if_reg: u8,
     ie_reg: u8,
     ime_reg: u8,
+    flags: Flags
+}
+
+pub struct Flags {
+    pub zero: bool,
+    pub add_sub: bool,
+    pub half_carry: bool,
+    pub carry: bool
+}
+
+impl Flags {
+    fn get_byte(&self) -> u8 {
+        let mut flags = (self.zero as u8) << 1;
+        flags = (flags | (self.add_sub as u8)) << 1;
+        flags = (flags | (self.half_carry as u8)) << 1;
+        flags = flags | (self.carry as u8);
+        flags
+    }
+
+    fn set_byte(&mut self, to: u8) {
+        self.carry = to & 0x01 > 0;
+        self.half_carry = to & 0x02 > 0;
+        self.add_sub = to & 0x04 > 0;
+        self.zero = to & 0x08 > 0;
+    }
 }
 
 impl GameboyCPU for LR35902 {
@@ -32,7 +57,7 @@ impl GameboyCPU for LR35902 {
 impl LR35902 {
     pub fn new() -> LR35902 {
         LR35902 {
-            af: 0,
+            a: 0,
             bc: 0,
             de: 0,
             hl: 0,
@@ -41,23 +66,29 @@ impl LR35902 {
             if_reg: 0,
             ie_reg: 0,
             ime_reg: 0,
+            flags: Flags {
+                zero: false,
+                add_sub: false,
+                half_carry: false,
+                carry: false,
+            }
         }
     }
 
     pub fn get_a(&self) -> u8 {
-        bitwise::get_most(self.af)
+        self.a
     }
 
-    pub fn set_a(&self, to: u8) {
-        bitwise::set_most(self.af, to);
+    pub fn set_a(&mut self, to: u8) {
+        self.a = to;
     }
 
     pub fn get_f(&self) -> u8 {
-        bitwise::get_least(self.af)
+        self.flags.get_byte()
     }
 
-    pub fn set_f(&self, to: u8) {
-        bitwise::set_least(self.af, to);
+    pub fn set_f(&mut self, to: u8) {
+        self.flags.set_byte(to);
     }
 
     pub fn get_b(&self) -> u8 {
@@ -157,10 +188,11 @@ impl LR35902 {
     }
 
     pub fn get_af(&self) -> u16 {
-        self.af
+        ((self.a as u16) << 8) | self.flags.get_byte() as u16
     }
 
     pub fn set_af(&mut self, to: u16) {
-        self.af = to;
+        self.flags.set_byte(to as u8);
+        self.set_a((to >> 8) as u8);
     }
 }
