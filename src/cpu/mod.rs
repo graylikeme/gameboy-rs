@@ -24,7 +24,7 @@ pub struct LR35902 {
 
 impl GameboyCPU for LR35902 {
     fn step(&mut self, bus: &mut Bus) {
-        let opcode = bus.read_mem(self.pc);
+        let opcode = bus.read_byte(self.pc);
         let cycles = instructions::call(self, bus);
     }
 }

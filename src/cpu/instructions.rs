@@ -2,7 +2,7 @@ use cpu::LR35902;
 use hardware::Bus;
 
 pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
-    let opcode = bus.read_mem(cpu.get_pc());
+    let opcode = bus.read_byte(cpu.get_pc());
     cpu.inc_pc();
 
     match opcode {
@@ -12,7 +12,7 @@ pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
 }
 
 fn call_alt(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
-    let opcode = bus.read_mem(cpu.get_pc());
+    let opcode = bus.read_byte(cpu.get_pc());
     cpu.inc_pc();
 
     match opcode {
