@@ -25,7 +25,7 @@ pub struct LR35902 {
 
 pub struct Flags {
     pub zero: bool,
-    pub add_sub: bool,
+    pub sub: bool,
     pub half_carry: bool,
     pub carry: bool,
 }
@@ -33,7 +33,7 @@ pub struct Flags {
 impl Flags {
     fn get_byte(&self) -> u8 {
         let mut flags = (self.zero as u8) << 1;
-        flags = (flags | (self.add_sub as u8)) << 1;
+        flags = (flags | (self.sub as u8)) << 1;
         flags = (flags | (self.half_carry as u8)) << 1;
         flags = flags | (self.carry as u8);
         flags
@@ -42,7 +42,7 @@ impl Flags {
     fn set_byte(&mut self, to: u8) {
         self.carry = to & 0x01 > 0;
         self.half_carry = to & 0x02 > 0;
-        self.add_sub = to & 0x04 > 0;
+        self.sub = to & 0x04 > 0;
         self.zero = to & 0x08 > 0;
     }
 }
@@ -68,7 +68,7 @@ impl LR35902 {
             ime_reg: 0,
             flags: Flags {
                 zero: false,
-                add_sub: false,
+                sub: false,
                 half_carry: false,
                 carry: false,
             },
