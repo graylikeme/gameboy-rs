@@ -20,14 +20,14 @@ pub struct LR35902 {
     if_reg: u8,
     ie_reg: u8,
     ime_reg: u8,
-    flags: Flags
+    flags: Flags,
 }
 
 pub struct Flags {
     pub zero: bool,
     pub add_sub: bool,
     pub half_carry: bool,
-    pub carry: bool
+    pub carry: bool,
 }
 
 impl Flags {
@@ -71,7 +71,7 @@ impl LR35902 {
                 add_sub: false,
                 half_carry: false,
                 carry: false,
-            }
+            },
         }
     }
 

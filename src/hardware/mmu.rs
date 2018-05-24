@@ -13,7 +13,7 @@ impl MMU for MBCNone {
         match addr {
             0x0000..=0x7FFF => self.rom[addr as usize],
             0xA000..=0xBFFF => self.ram[(addr - 0xA000) as usize],
-            _ => 0xFF
+            _ => 0xFF,
         }
     }
 
