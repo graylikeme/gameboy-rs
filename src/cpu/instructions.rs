@@ -1,6 +1,18 @@
 use cpu::LR35902;
 use hardware::Bus;
 
+macro_rules! half_carry_add_u8 {
+    ($x:expr, $y:expr) => {
+        (($x & 0x0F) + ($y & 0x0F)) & 0x10 == 0x10
+    };
+}
+
+macro_rules! half_carry_sub_u8 {
+    ($x:expr, $y:expr) => {
+        ($x & 0x0F) < ($y & 0x0F)
+    };
+}
+
 pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
     let opcode = bus.read_byte(cpu.get_pc());
     cpu.inc_pc();
@@ -27,7 +39,7 @@ pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
         0x04 => {
             let b_reg = cpu.get_b();
             let new_b_reg = b_reg + 1;
-            cpu.flags.half_carry = ((b_reg | 0x0F) + 1) >> 4 > 0;
+            cpu.flags.half_carry = half_carry_add_u8!(b_reg, 1);
             cpu.flags.sub = false;
             cpu.flags.zero = new_b_reg == 0;
             cpu.set_b(new_b_reg);
@@ -36,7 +48,7 @@ pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
         0x05 => {
             let b_reg = cpu.get_b();
             let new_b_reg = b_reg - 1;
-            cpu.flags.half_carry = ((b_reg | 0x0F) - 1) >> 3 > 0;
+            cpu.flags.half_carry = half_carry_sub_u8!(b_reg, 1);
             cpu.flags.sub = true;
             cpu.flags.zero = new_b_reg == 0;
             cpu.set_b(new_b_reg);
