@@ -36,7 +36,7 @@ pub fn call(cpu: &mut LR35902, bus: &mut Bus) -> u16 {
         0x05 => {
             let b_reg = cpu.get_b();
             let new_b_reg = b_reg - 1;
-            cpu.flags.half_carry = ((b_reg | 0x0F) - 1) >> 31 > 0;
+            cpu.flags.half_carry = ((b_reg | 0x0F) - 1) >> 3 > 0;
             cpu.flags.sub = true;
             cpu.flags.zero = new_b_reg == 0;
             cpu.set_b(new_b_reg);
