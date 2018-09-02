@@ -1,5 +1,5 @@
 use cpu::LR35902;
-use hardware::Bus;
+use hardware::bus::Bus;
 
 macro_rules! half_carry_add_u8 {
     ($x:expr, $y:expr) => {

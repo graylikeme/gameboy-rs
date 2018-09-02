@@ -1,7 +1,7 @@
 mod instructions;
 
 use bitwise;
-use hardware::Bus;
+use hardware::bus::Bus;
 
 pub trait GameboyCPU {
     fn step(&mut self, bus: &mut Bus);

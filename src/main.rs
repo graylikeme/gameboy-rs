@@ -5,7 +5,7 @@ mod cpu;
 mod hardware;
 
 use cpu::{GameboyCPU, LR35902};
-use hardware::{mmu, Bus};
+use hardware::{bus::Bus, mmu};
 
 pub struct Gameboy {
     cpu: Box<GameboyCPU>,
