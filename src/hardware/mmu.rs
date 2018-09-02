@@ -1,3 +1,5 @@
+use hardware::cartridge_reader::CartridgeInfo;
+
 pub trait MMU {
     fn read(&self, addr: u16) -> u8;
     fn write(&mut self, addr: u16, value: u8);
@@ -98,9 +100,9 @@ impl MMU for MBC5 {
     }
 }
 
-pub fn get_mmu() -> Box<MMU> {
-    Box::new(MBCNone {
+pub fn get_mmu(cartridge: CartridgeInfo) -> Option<Box<MMU>> {
+    Some(Box::new(MBCNone {
         rom: vec![0; 0x4000],
         ram: vec![0; 0x2000],
-    })
+    }))
 }
