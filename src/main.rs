@@ -22,7 +22,7 @@ impl Gameboy {
 }
 
 fn main() {
-    let cartridge = cartridge_reader::read("".to_owned()).unwrap_or_else(|err| {
+    let cartridge = cartridge_reader::read("roms/cpu_instrs.gb".to_owned()).unwrap_or_else(|err| {
         println!("Failed to load a game cartridge: {:?}", err);
         exit(1);
     });
