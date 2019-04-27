@@ -22,7 +22,7 @@ impl MMU for MBCNone {
     fn write(&mut self, addr: u16, value: u8) {
         match addr {
             0xA000..=0xBFFF => self.ram[(addr - 0xA000) as usize] = value,
-            unknown_addr => println!(
+            unknown_addr => warn!(
                 "Attempted to write to unreachable address: {:2X}",
                 unknown_addr
             ),
@@ -68,7 +68,7 @@ impl MMU for MBC2 {
                 self.rom_offset = offset * self.rom_size;
             }
             0xA000..=0xBFFF => self.ram[addr as usize] = value,
-            unknown_addr => println!(
+            unknown_addr => warn!(
                 "Attempted to write to unreachable address: {:2X}",
                 unknown_addr
             ),
