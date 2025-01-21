@@ -50,7 +50,9 @@ impl Flags {
 impl GameboyCPU for LR35902 {
     fn step(&mut self, bus: &mut Bus) {
         let opcode = bus.read_byte(self.pc);
+        info!("read code: {:x}", opcode);
         let cycles = instructions::call(self, bus);
+        info!("cycles: {:x}", cycles);
     }
 }
 
@@ -95,48 +97,48 @@ impl LR35902 {
         bitwise::get_most(self.bc)
     }
 
-    pub fn set_b(&self, to: u8) {
-        bitwise::set_most(self.bc, to);
+    pub fn set_b(&mut self, to: u8) {
+        self.bc = bitwise::set_most(self.bc, to);
     }
 
     pub fn get_c(&self) -> u8 {
         bitwise::get_least(self.bc)
     }
 
-    pub fn set_c(&self, to: u8) {
-        bitwise::set_least(self.bc, to);
+    pub fn set_c(&mut self, to: u8) {
+        self.bc = bitwise::set_least(self.bc, to);
     }
 
     pub fn get_d(&self) -> u8 {
         bitwise::get_most(self.de)
     }
 
-    pub fn set_d(&self, to: u8) {
-        bitwise::set_most(self.de, to);
+    pub fn set_d(&mut self, to: u8) {
+        self.de = bitwise::set_most(self.de, to);
     }
 
     pub fn get_e(&self) -> u8 {
         bitwise::get_least(self.de)
     }
 
-    pub fn set_e(&self, to: u8) {
-        bitwise::set_least(self.de, to);
+    pub fn set_e(&mut self, to: u8) {
+        self.de = bitwise::set_least(self.de, to);
     }
 
     pub fn get_h(&self) -> u8 {
         bitwise::get_most(self.hl)
     }
 
-    pub fn set_h(&self, to: u8) {
-        bitwise::set_most(self.hl, to);
+    pub fn set_h(&mut self, to: u8) {
+        self.hl = bitwise::set_most(self.hl, to);
     }
 
     pub fn get_l(&self) -> u8 {
         bitwise::get_least(self.hl)
     }
 
-    pub fn set_l(&self, to: u8) {
-        bitwise::set_least(self.hl, to);
+    pub fn set_l(&mut self, to: u8) {
+        self.hl = bitwise::set_least(self.hl, to);
     }
 
     pub fn get_sp(&self) -> u16 {
